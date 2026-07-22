@@ -76,6 +76,30 @@ html, body {
   min-width: 0;
 }
 
+/* identity / role header -- flat, terminal-style, no cards */
+#idBlock {
+  border-bottom: 2px solid #3a3a2a;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+
+#idTitle {
+  font-size: 16px;
+  letter-spacing: 2px;
+  color: #ffb020;
+  margin-bottom: 4px;
+}
+
+.idLine {
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: #8a8460;
+}
+
+.idVal {
+  color: #9fdc8f;
+}
+
 #clockRow {
   border-bottom: 2px solid #3a3a2a;
   padding-bottom: 8px;
@@ -91,11 +115,44 @@ html, body {
   color: #8a8460;
 }
 
-#clockValue {
+#clockField {
   font-size: 42px;
   font-weight: bold;
   color: #ffb020;
   text-shadow: 0 0 6px rgba(255,176,32,0.5);
+}
+
+#clockPrefix {
+  font-size: 26px;
+  color: #8a8460;
+  text-shadow: none;
+}
+
+#clockValue {
+  color: #ffb020;
+}
+
+#clockField.warn #clockValue,
+#clockValue.warn {
+  color: #ff5030;
+  text-shadow: 0 0 8px rgba(255,80,48,0.7);
+}
+
+#activeRow {
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: #8a8460;
+  border-bottom: 2px solid #3a3a2a;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+
+#activeDecisionValue {
+  color: #9fdc8f;
+}
+
+#activeDecisionValue.pending {
+  color: #ff5030;
 }
 
 #clockValue.warn {

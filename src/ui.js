@@ -2,7 +2,8 @@
 // dumb DOM plumbing. reads/writes state, nothing clever.
 
 var logEl, clockEl, decisionEl, decisionPromptEl, decisionButtonsEl,
-    endEl, endTitleEl, endStatsEl, holdBtnEl, abortBtnEl;
+    endEl, endTitleEl, endStatsEl, holdBtnEl, abortBtnEl,
+    statusEl, activeDecisionEl;
 
 function initUI() {
   logEl = document.getElementById('log');
@@ -15,6 +16,40 @@ function initUI() {
   endStatsEl = document.getElementById('endStats');
   holdBtnEl = document.getElementById('btnHold');
   abortBtnEl = document.getElementById('btnAbort');
+  statusEl = document.getElementById('statusValue');
+  activeDecisionEl = document.getElementById('activeDecisionValue');
+}
+
+// short tag shown in the ACTIVE DECISION header while a choice is pending;
+// set when a decision is shown, read by renderStatus.
+var currentDecisionLabel = 'ACTION REQUIRED';
+
+// the console header: what the machine reports about itself. keeps the
+// player anchored in "I am the launch director" without any tutorial text.
+var STATUS_TEXT = {
+  COUNTDOWN:   'COUNTING',
+  HOLD:        'HOLD - ACTION REQUIRED',
+  MANUAL_HOLD: 'HOLD',
+  POLL:        'GO / NO-GO POLL',
+  LAUNCH:      'LIFTOFF',
+  SUCCESS:     'VEHICLE IN FLIGHT',
+  FAILURE:     'VEHICLE LOST',
+  ABORTED:     'COUNT SCRUBBED'
+};
+
+function renderStatus(state) {
+  statusEl.textContent = STATUS_TEXT[state.phase] || 'STANDING BY';
+
+  // a decision is pending exactly while its panel is on screen -- derive
+  // from the DOM so it clears no matter which resolver hides it.
+  var pending = !decisionEl.classList.contains('hidden');
+  if (pending) {
+    activeDecisionEl.textContent = currentDecisionLabel;
+    activeDecisionEl.classList.add('pending');
+  } else {
+    activeDecisionEl.textContent = 'NONE';
+    activeDecisionEl.classList.remove('pending');
+  }
 }
 
 function pushLog(state, text, cls) {
@@ -26,7 +61,9 @@ function pushLog(state, text, cls) {
 }
 
 // actions is a list of { label, onClick(state) }
-function showDecision(state, promptText, actions) {
+// optional statusLabel is the short tag shown in the ACTIVE DECISION header
+function showDecision(state, promptText, actions, statusLabel) {
+  currentDecisionLabel = statusLabel || 'ACTION REQUIRED';
   decisionPromptEl.textContent = promptText;
   decisionButtonsEl.innerHTML = '';
   for (var i = 0; i < actions.length; i++) {

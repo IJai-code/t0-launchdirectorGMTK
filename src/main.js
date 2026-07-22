@@ -39,6 +39,7 @@ function boot() {
   // its ambient line here at boot from the same table.
   fireAmbient(state);
   renderClock(state);
+  renderStatus(state);
 
   lastFrame = performance.now();
   requestAnimationFrame(loop);
@@ -60,6 +61,7 @@ function loop(now) {
   if (state.repairing) tickRepair(state, dt);
   tickComms(state, dt);
   renderControls(state);
+  renderStatus(state);
 
   if (state.phase === 'LAUNCH') {
     state.launchClock += dt;
