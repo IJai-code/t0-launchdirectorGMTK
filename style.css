@@ -284,12 +284,14 @@ button:active {
 
 #endTitle {
   font-size: 22px;
-  margin-bottom: 8px;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
 }
 
 #endStats {
   font-size: 13px;
   color: #9fdc8f;
   white-space: pre;
-  margin-bottom: 10px;
+  line-height: 1.55;
+  margin-bottom: 12px;
 }
