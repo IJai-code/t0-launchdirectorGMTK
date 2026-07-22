@@ -12,12 +12,10 @@ function tickCountdown(state) {
     if (state.riskFlag) {
       state.phase = 'FAILURE';
       state.failClock = 0;
-      sfxExplosion();
       pushLog(state, 'LAUNCH CONTROL: ENGINE 2 FAILURE AT IGNITION. ABORT, ABORT, ABORT.', 'bad');
     } else {
       state.phase = 'LAUNCH';
       state.launchClock = 0;
-      sfxIgnition();
       pushLog(state, 'FLIGHT: WE HAVE MAIN ENGINE START.', 'good');
     }
   }

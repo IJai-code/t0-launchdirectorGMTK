@@ -51,7 +51,6 @@ function triggerAnomaly(state) {
   state.failureTriggered = true;
   state.phase = 'HOLD';
   state.engineStatus = 'DEGRADED';
-  sfxAlarm();
   pushLog(state, 'PROPULSION, FLIGHT: ENGINE 2 CHAMBER TEMPERATURE RISING.', 'warn');
   pushLog(state, 'FLIGHT: COPY, PROPULSION. STANDING BY.', null);
   showDecision(state, 'FLIGHT: YOUR CALL -- WORK ENGINE 2, OR PRESS ON?', [
@@ -83,7 +82,6 @@ function tickRepair(state, dt) {
     state.riskFlag = false;
     state.phase = 'COUNTDOWN';
     hideDecision();
-    sfxConfirm();
     pushLog(state, 'PROPULSION, FLIGHT: ENGINE 2 TEMPERATURE BACK WITHIN LIMITS.', 'good');
     pushLog(state, 'FLIGHT: COPY. ENGINE STATUS NOMINAL. RESUME THE COUNT.', 'good');
   }
@@ -111,7 +109,6 @@ function triggerPoll(state) {
 
 function onPollComplete(state) {
   if (state.pollNoGo) {
-    sfxAlarm();
     pushLog(state, 'FLIGHT: WE HAVE A NO-GO. YOUR CALL.', 'bad');
     showDecision(state, 'PROPULSION NO-GO -- FIX, PROCEED AS IS, OR ABORT?', [
       { label: 'FIX', onClick: resolvePollFix },
@@ -119,7 +116,6 @@ function onPollComplete(state) {
       { label: 'ABORT', onClick: resolveAbort }
     ]);
   } else {
-    sfxConfirm();
     pushLog(state, 'FLIGHT: WE ARE GO FOR LAUNCH.', 'good');
     state.phase = 'COUNTDOWN';
   }
@@ -155,7 +151,6 @@ function toggleManualHold(state) {
 
 function resolveAbort(state) {
   hideDecision();
-  sfxAbort();
   state.phase = 'ABORTED';
   state.abortClock = 0;
   state.fuelAtAbort = Math.round(65 + (state.t / 120) * 35);
