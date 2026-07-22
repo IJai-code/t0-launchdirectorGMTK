@@ -34,6 +34,7 @@ function boot() {
 
   initUI();
   initInput(state);
+  initAudio();
 
   // T-120 is never landed on by a tick (first tick moves to 119), so fire
   // its ambient line here at boot from the same table.
@@ -55,6 +56,15 @@ function loop(now) {
     tickCountdown(state);
     checkEvents(state);
     renderClock(state);
+    // audible ticks only in the final countdown: normal T-20..T-11,
+    // stronger/faster-feeling T-10..T-1 (T-0 is ignition/explosion)
+    if (state.phase === 'COUNTDOWN') {
+      if (state.t <= 10 && state.t >= 1) {
+        sfxTick(true);
+      } else if (state.t <= 20 && state.t > 10) {
+        sfxTick(false);
+      }
+    }
   }
 
   if (state.repairing) tickRepair(state, dt);
