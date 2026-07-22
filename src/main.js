@@ -32,6 +32,21 @@ var ctx;
 var lastFrame = 0;
 var tickAccumulator = 0;
 
+// how many real seconds one countdown-second should take right now.
+// quiet stretches run fast so the player never watches dead air; the count
+// snaps back to real-time for the dramatic finale, the poll, and any moment
+// a decision is on the table. the clock only advances in COUNTDOWN anyway,
+// so this purely controls the *speed* of that advance, never the triggers.
+var REALTIME_INTERVAL = 1.0;
+var FAST_INTERVAL = 0.28; // ~3.5 countdown-seconds per real second
+
+function countdownInterval(state) {
+  if (state.t <= 20) return REALTIME_INTERVAL;          // dramatic final stretch
+  if (state.phase !== 'COUNTDOWN') return REALTIME_INTERVAL; // decision/hold/poll pending
+  if (state.commsQueue.length > 0) return REALTIME_INTERVAL;  // roll call in progress
+  return FAST_INTERVAL;                                  // open stretch -> speed up
+}
+
 function boot() {
   var canvas = document.getElementById('padCanvas');
   ctx = canvas.getContext('2d');
@@ -55,8 +70,8 @@ function loop(now) {
   if (dt > 0.25) dt = 0.25; // tab was backgrounded, don't eat the clock
 
   tickAccumulator += dt;
-  while (tickAccumulator >= 1) {
-    tickAccumulator -= 1;
+  while (tickAccumulator >= countdownInterval(state)) {
+    tickAccumulator -= countdownInterval(state);
     tickCountdown(state);
     checkEvents(state);
     renderClock(state);
