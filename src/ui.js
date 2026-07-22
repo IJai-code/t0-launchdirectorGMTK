@@ -38,8 +38,33 @@ var STATUS_TEXT = {
   ABORTED:     'COUNT SCRUBBED'
 };
 
+// station GO/NO-GO from carried risk. this is the single source of truth
+// the systems board reads; the poll in events.js uses the identical mapping
+// (guidance, weather, and propulsion = engine||fuel; ground & comms always
+// GO) so the board and the roll call can never disagree.
+function stationNoGo(state, sys) {
+  var r = state.risk;
+  if (sys === 'guidance') return r.guidance;
+  if (sys === 'weather') return r.weather;
+  if (sys === 'propulsion') return r.engine || r.fuel;
+  return false; // ground, comms
+}
+
+var sysStatEls = null;
+function renderSystems(state) {
+  if (!sysStatEls) sysStatEls = document.querySelectorAll('.sysStat');
+  for (var i = 0; i < sysStatEls.length; i++) {
+    var el = sysStatEls[i];
+    var nogo = stationNoGo(state, el.getAttribute('data-sys'));
+    el.textContent = nogo ? 'NO-GO' : 'GO';
+    if (nogo) el.classList.add('nogo');
+    else el.classList.remove('nogo');
+  }
+}
+
 function renderStatus(state) {
   statusEl.textContent = STATUS_TEXT[state.phase] || 'STANDING BY';
+  renderSystems(state);
 
   // a decision is pending exactly while its panel is on screen -- derive
   // from the DOM so it clears no matter which resolver hides it.

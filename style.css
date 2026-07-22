@@ -151,6 +151,47 @@ html, body {
   color: #9fdc8f;
 }
 
+/* live mission systems board -- flat CRT rows, dotted leaders */
+#systemsBoard {
+  border-bottom: 2px solid #3a3a2a;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+
+.sysTitle {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #8a8460;
+  margin-bottom: 4px;
+}
+
+.sysRow {
+  display: flex;
+  align-items: baseline;
+  font-size: 12px;
+  letter-spacing: 1px;
+  line-height: 1.5;
+}
+
+.sysName {
+  color: #b8b088;
+}
+
+.sysDots {
+  flex: 1;
+  margin: 0 6px;
+  border-bottom: 1px dotted #3a3a2a;
+  transform: translateY(-3px);
+}
+
+.sysStat {
+  color: #3aa050;
+}
+
+.sysStat.nogo {
+  color: #ff5030;
+}
+
 #activeDecisionValue.pending {
   color: #ff5030;
 }
