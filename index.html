@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>T-0</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="console">
+
+  <div id="padView">
+    <canvas id="padCanvas" width="320" height="200"></canvas>
+    <div id="scanlines"></div>
+  </div>
+
+  <div id="panel">
+
+    <div id="clockRow">
+      <span id="clockLabel">T MINUS</span>
+      <span id="clockValue">120</span>
+    </div>
+
+    <div id="log"></div>
+
+    <div id="decision" class="hidden">
+      <div id="decisionPrompt">-- </div>
+      <div id="decisionButtons"></div>
+    </div>
+
+    <div id="controls">
+      <button id="btnHold">HOLD</button>
+      <button id="btnAbort" class="dangerBtn">ABORT</button>
+    </div>
+
+    <div id="endScreen" class="hidden">
+      <div id="endTitle">-- </div>
+      <div id="endStats"></div>
+      <button id="btnRestart">RESET</button>
+    </div>
+
+  </div>
+
+</div>
+
+<script src="src/countdown.js"></script>
+<script src="src/comms.js"></script>
+<script src="src/events.js"></script>
+<script src="src/rocket.js"></script>
+<script src="src/ui.js"></script>
+<script src="src/input.js"></script>
+<script src="src/main.js"></script>
+</body>
+</html>

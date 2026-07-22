@@ -1,0 +1,203 @@
+/* T-0 -- mission control console
+   amber phosphor on dark green-black, nothing rounded, nothing shiny */
+
+@font-face {
+  font-family: 'ConsoleMono';
+  src: local('Courier New');
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: #0a0c0a;
+  color: #d8d0a8;
+  font-family: 'Courier New', monospace;
+  overflow: hidden;
+}
+
+#console {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding: 12px;
+  gap: 12px;
+}
+
+#padView {
+  position: relative;
+  flex: 0 0 640px;
+  height: 400px;
+  align-self: flex-start;
+  border: 3px solid #3a3a2a;
+  background: #000;
+  image-rendering: pixelated;
+}
+
+#padCanvas {
+  width: 640px;
+  height: 400px;
+  image-rendering: pixelated;
+  display: block;
+}
+
+/* crude scanline overlay, deliberately a bit uneven */
+#scanlines {
+  pointer-events: none;
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.0) 0px,
+    rgba(0,0,0,0.0) 2px,
+    rgba(0,0,0,0.18) 3px,
+    rgba(0,0,0,0.0) 4px
+  );
+  mix-blend-mode: multiply;
+}
+#scanlines::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  box-shadow: inset 0 0 60px 20px rgba(0,0,0,0.55);
+}
+
+#panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border: 3px solid #3a3a2a;
+  background: #111308;
+  padding: 10px 14px;
+  min-width: 0;
+}
+
+#clockRow {
+  border-bottom: 2px solid #3a3a2a;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+#clockLabel {
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: #8a8460;
+}
+
+#clockValue {
+  font-size: 42px;
+  font-weight: bold;
+  color: #ffb020;
+  text-shadow: 0 0 6px rgba(255,176,32,0.5);
+}
+
+#clockValue.warn {
+  color: #ff5030;
+  text-shadow: 0 0 8px rgba(255,80,48,0.7);
+}
+
+#log {
+  flex: 1;
+  overflow-y: auto;
+  font-size: 13px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  color: #9fdc8f;
+}
+
+#log .line {
+  margin: 0 0 2px 0;
+}
+#log .line.warn { color: #ffb020; }
+#log .line.bad { color: #ff5030; }
+#log .line.good { color: #6fe0ff; }
+
+#decision {
+  border-top: 2px dashed #3a3a2a;
+  padding-top: 10px;
+  margin-top: 10px;
+}
+
+#decision.hidden, #endScreen.hidden {
+  display: none;
+}
+
+#decisionPrompt {
+  color: #ff5030;
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+#controls {
+  border-top: 2px solid #3a3a2a;
+  padding-top: 10px;
+  margin-top: 10px;
+}
+
+button.dangerBtn {
+  border-color: #7a2a20;
+  color: #ff7a5a;
+}
+
+button.dangerBtn:hover {
+  border-color: #ff5030;
+  color: #ff5030;
+  background: #2a1410;
+}
+
+button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+button:disabled:hover {
+  background: #1b1d10;
+  color: #d8d0a8;
+  border-color: #6a6440;
+}
+
+button {
+  font-family: 'Courier New', monospace;
+  background: #1b1d10;
+  color: #d8d0a8;
+  border: 2px solid #6a6440;
+  padding: 8px 16px;
+  margin-right: 10px;
+  font-size: 14px;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #2a2c18;
+  color: #ffb020;
+  border-color: #ffb020;
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+#endScreen {
+  border-top: 2px solid #3a3a2a;
+  margin-top: 10px;
+  padding-top: 10px;
+}
+
+#endTitle {
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+
+#endStats {
+  font-size: 13px;
+  color: #9fdc8f;
+  white-space: pre;
+  margin-bottom: 10px;
+}

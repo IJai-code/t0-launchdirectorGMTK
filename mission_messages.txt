@@ -1,0 +1,65 @@
+MISSION CONTROL COMMUNICATIONS
+
+=== NORMAL COUNTDOWN ===
+
+T-120
+FLIGHT:
+Countdown initiated. All stations stand by.
+
+T-110
+GROUND:
+Launch pad systems nominal.
+
+T-100
+PROP:
+Fuel loading complete. Propulsion systems in family.
+
+T-90
+PROP:
+Flight, Prop. Engine Two chamber temperature rising.
+
+T-89
+FLIGHT:
+Copy, Prop. Standing by.
+
+
+=== AFTER ENGINE FIX ===
+
+T-86
+PROP:
+Flight, Prop. Engine Two temperature returning to limits.
+
+T-85
+FLIGHT:
+Copy. Engine status nominal.
+
+
+=== FINAL COUNTDOWN ===
+
+T-30
+FLIGHT:
+All stations, prepare for final countdown.
+
+T-20
+GUIDANCE:
+Guidance system is in family.
+
+T-15
+COMMS:
+Telemetry link nominal.
+
+T-10
+FLIGHT:
+Beginning final GO/NO-GO poll.
+
+T-5
+FLIGHT:
+All systems committed.
+
+T-0
+FLIGHT:
+Ignition sequence start.
+
+T-0
+FLIGHT:
+Liftoff. Vehicle is airborne.
