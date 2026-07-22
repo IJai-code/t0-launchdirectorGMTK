@@ -10,7 +10,11 @@ var state = {
   failureTriggered: false,
   pollTriggered: false,
   pollNoGo: false,
-  riskFlag: false,
+  // unresolved risks the player chose to carry. read by the poll (which
+  // stations call NO-GO) and by the T-0 outcome tier. deterministic.
+  risk: { weather: false, guidance: false, fuel: false, engine: false },
+  decisionsFired: {},
+  launchOutcome: '',   // 'PERFECT' | 'ROUGH' -- set at T-0 for the end screen
   repairing: false,
   repairClock: 0,
   launchClock: 0,

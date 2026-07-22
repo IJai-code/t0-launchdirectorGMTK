@@ -186,10 +186,45 @@ html, body {
   display: none;
 }
 
-#decisionPrompt {
+/* decision panel -- player-facing teaching layer */
+#decisionTitle {
   color: #ff5030;
-  margin-bottom: 8px;
+  font-size: 15px;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+#decisionBody {
+  color: #d8d0a8;
   font-size: 13px;
+  margin-bottom: 10px;
+}
+
+#decisionButtons {
+  display: flex;
+  gap: 10px;
+}
+
+#decisionButtons button {
+  margin-right: 0;
+  text-align: left;
+  min-width: 150px;
+}
+
+.btnLabel {
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
+.btnHint {
+  font-size: 11px;
+  color: #8a8460;
+  letter-spacing: 0;
+  margin-top: 3px;
+}
+
+#decisionButtons button:hover .btnHint {
+  color: #b8b088;
 }
 
 #controls {
