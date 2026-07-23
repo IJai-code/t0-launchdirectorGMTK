@@ -63,7 +63,13 @@ function renderSystems(state) {
 }
 
 function renderStatus(state) {
-  statusEl.textContent = STATUS_TEXT[state.phase] || 'STANDING BY';
+  // while the engine team is working, the count is held but no player action
+  // is pending -- reflect that instead of the generic "ACTION REQUIRED".
+  if (state.repairing) {
+    statusEl.textContent = 'HOLD - REPAIR UNDERWAY';
+  } else {
+    statusEl.textContent = STATUS_TEXT[state.phase] || 'STANDING BY';
+  }
   renderSystems(state);
 
   // a decision is pending exactly while its panel is on screen -- derive

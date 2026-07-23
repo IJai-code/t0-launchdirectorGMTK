@@ -66,9 +66,9 @@ var DECISIONS = {
     title: 'WEATHER SYSTEM WARNING',
     body: 'High winds detected near the launch corridor.',
     comms: ['WEATHER, FLIGHT: UPPER LEVEL WINDS EXCEEDING LIMITS.', 'warn'],
-    safe:  { label: 'WAIT FOR CONDITIONS', hint: 'Safer, but delays launch',
+    safe:  { label: 'WAIT FOR CONDITIONS', hint: 'Clear the issue. Reduce mission risk.',
              comms: ['WEATHER, FLIGHT: WINDS EASING. BACK WITHIN LIMITS.', 'good'] },
-    risky: { label: 'PROCEED', hint: 'Faster, but increases risk',
+    risky: { label: 'PROCEED', hint: 'Press on. Accept added mission risk.',
              comms: ['FLIGHT: COPY. WE PRESS ON THROUGH THE WINDS.', 'bad'] }
   },
   70: {
@@ -76,9 +76,9 @@ var DECISIONS = {
     title: 'GUIDANCE COMPUTER WARNING',
     body: 'Navigation calibration is drifting.',
     comms: ['GUIDANCE, FLIGHT: PLATFORM ALIGNMENT DRIFT DETECTED.', 'warn'],
-    safe:  { label: 'RECALIBRATE', hint: 'Safer, but costs time',
+    safe:  { label: 'RECALIBRATE', hint: 'Clear the issue. Reduce mission risk.',
              comms: ['GUIDANCE, FLIGHT: PLATFORM REALIGNED. IN FAMILY.', 'good'] },
-    risky: { label: 'CONTINUE', hint: 'Faster, but increases risk',
+    risky: { label: 'CONTINUE', hint: 'Press on. Accept added mission risk.',
              comms: ['FLIGHT: COPY. FLYING WITH CURRENT ALIGNMENT.', 'bad'] }
   },
   40: {
@@ -86,9 +86,9 @@ var DECISIONS = {
     title: 'PROPELLANT SYSTEM WARNING',
     body: 'Fuel tank pressure is reading below target.',
     comms: ['PROPULSION, FLIGHT: TANK PRESSURE BELOW NOMINAL.', 'warn'],
-    safe:  { label: 'TOP OFF PRESSURE', hint: 'Safer, but delays launch',
+    safe:  { label: 'TOP OFF PRESSURE', hint: 'Clear the issue. Reduce mission risk.',
              comms: ['PROPULSION, FLIGHT: TANK PRESSURE BACK TO TARGET.', 'good'] },
-    risky: { label: 'LAUNCH AS IS', hint: 'Faster, but increases risk',
+    risky: { label: 'LAUNCH AS IS', hint: 'Press on. Accept added mission risk.',
              comms: ['FLIGHT: COPY. FLYING WITH LOW TANK PRESSURE.', 'bad'] }
   }
 };
@@ -151,13 +151,14 @@ function triggerAnomaly(state) {
     body: 'Engine 2 is running hot on the pad.',
     statusLabel: 'ENGINE',
     actions: [
-      { label: 'WORK THE PROBLEM', hint: 'Hold and cool it down', onClick: resolveFix },
-      { label: 'PRESS ON',         hint: 'Ignore it, increases risk', onClick: resolveIgnore }
+      { label: 'WORK THE PROBLEM', hint: 'Hold and repair. Reduce mission risk.', onClick: resolveFix },
+      { label: 'PRESS ON',         hint: 'Ignore it. Accept added mission risk.', onClick: resolveIgnore }
     ]
   });
 }
 
 function resolveFix(state) {
+  hideDecision();          // choice made -- close the panel so it can't be re-clicked
   pushLog(state, 'PROPULSION, FLIGHT: COPY, WORKING ENGINE 2. STAND BY.', 'warn');
   state.repairing = true;
   state.repairClock = 0;
